@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Initilal_YV_Assesment2.Models.Category>
+
+@{
+    ViewBag.Title = "ViewAllCategories";
+}
+
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+</style>
+
+<div class="container-fluid">
+    <h2>View All Categories</h2>
+    <hr />
+
+    <p>
+        @Html.ActionLink("Create New", "CreateCategory", null,
+        new { @class = "btn btn-danger", style = "background-color: #d9534f; border-color: #d43f3a;" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCategory", new { id = item.CategoryId }) |
+                    @using (Html.BeginForm("DeleteCategory", "Admin", new { id = item.CategoryId }, FormMethod.Post, new { style = "display:inline;" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <button type="submit"
+                                class="btn btn-link"
+                                onclick="return confirm('Are you sure you want to permanently delete this category?');">
+                            Delete Category
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+    <p>
+        @Html.ActionLink("Back to Admin Dashboard", "Index")
+    </p>
+</div>

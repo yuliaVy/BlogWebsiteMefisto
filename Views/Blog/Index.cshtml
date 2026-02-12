@@ -1,0 +1,149 @@
+﻿@model Initilal_YV_Assesment2.Models.BlogViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    /* ===== PAGE LAYOUT ===== */
+    body {
+        background-color: #dcdcdc;
+    }
+
+    .content-area {
+        display: flex;
+    }
+
+    /* ===== LEFT PANEL ===== */
+
+    .left-panel {
+        float: left; 
+        width: 22%;
+        background: #e6e6e6;
+        padding: 10px;
+    }
+
+    .toggle-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .cat-item {
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .cat-item a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .cat-item.all {
+        font-weight: bold;
+    }
+
+    /* ===== POSTS ===== */
+
+    .posts-area {
+        width: 78%;
+        padding: 20px;
+    }
+
+    .title {
+        font-family: serif;
+    }
+
+    .post-box {
+        background: white;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 4px;
+    }
+
+    .meta {
+        color: gray;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .read-more {
+        text-align: right;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <div class="content-area">
+
+        <!-- ===== LEFT CATEGORIES ===== -->
+        <div class="left-panel">
+
+            <button class="toggle-btn" onclick="toggleCategories()">
+                ☰ Categories
+            </button>
+
+            <div id="catList">
+
+                <div class="cat-item all">
+                    @Html.ActionLink("VIEW ALL POSTS", "Index", "Blog")
+                </div>
+
+                @foreach (var cat in Model.Categories)
+                {
+                    <div class="cat-item">
+                        @Html.ActionLink(cat.Name, "Index", new { categoryId = cat.CategoryId })
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <!-- ===== POSTS AREA ===== -->
+        <div class="posts-area">
+
+            <h2 class="title">Mefisto Theatre Blog</h2>
+
+            @foreach (var post in Model.Posts)
+            {
+                <div class="post-box">
+
+                    <h4>@post.Title</h4>
+
+                    <div class="meta">
+                        Category: @post.Category.Name <br />
+                        Author: @post.User.UserName
+                    </div>
+
+                    <p>
+                        @if (post.Content != null && post.Content.Length > 220)
+                        {
+                            @post.Content.Substring(0, 220) <text>...</text>
+                        }
+                        else
+                        {
+                            @post.Content
+                        }
+                    </p>
+
+                    <div class="read-more">
+                        @Html.ActionLink( "READ MORE NOW ➜", "Details", new { id = post.PostId })
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCategories() {
+        var list = document.getElementById("catList");
+
+        if (list.style.display === "none")
+        {
+            list.style.display = "block";
+        } else
+        {
+            list.style.display = "none";
+        }
+    }
+</script>

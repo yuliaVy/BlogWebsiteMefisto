@@ -1,0 +1,84 @@
+﻿@model  IEnumerable<Initilal_YV_Assesment2.Models.User>
+
+@{
+    ViewBag.Title = "ViewAllUsers";
+}
+
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+
+    .serif-title {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 2rem;
+        color: #1a1a1a;
+        margin-bottom: 30px;
+        margin-top: 20px;
+    }
+
+    .table-header {
+        background-color: #dcdcdc;
+        font-weight: bold;
+        border-bottom: 2px solid #999;
+    }
+</style>
+
+<div class="container-fluid">
+    <h1 class="serif-title">View All Registered Members</h1>
+    <table class="table table-hover">
+        <thead class="table-header">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SecondName)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.MiddleName)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SecondName)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.MiddleName)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Take a Closer Look", "UserDetails", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        @Html.ActionLink("Back to Admin Dashboard", "Index")
+    </p>
+</div>

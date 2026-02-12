@@ -1,0 +1,157 @@
+﻿@model Initilal_YV_Assesment2.Models.IndexViewModel
+
+@{
+    ViewBag.Title = "Account Details";
+}
+
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+    /* 1. Header Typography */
+    .account-welcome {
+        font-family: 'Times New Roman', serif;
+        font-size: 2.8rem;
+        margin-top: 30px;
+        margin-bottom: 5px;
+        color: #000;
+    }
+
+    .account-sub-header {
+        font-style: italic;
+        color: #555;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 10px;
+        display: inline-block;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    /* 2. Form Grid Layout */
+    .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two equal columns */
+        gap: 20px 40px; /* Gap between fields */
+        max-width: 900px;
+        margin-top: 20px;
+    }
+
+    .form-group-custom {
+        margin-bottom: 15px;
+    }
+
+    .form-group-custom label {
+        display: block;
+        font-weight: normal;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .form-input-custom {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        background-color: white;
+        font-size: 1rem;
+    }
+
+    /* 3. Password Link */
+    .password-link {
+        color: #3366cc;
+        text-decoration: underline;
+        font-style: italic;
+        font-size: 0.9rem;
+        display: block;
+        margin-top: 10px;
+    }
+
+    /* 4. Save Button */
+    .btn-save-back {
+        background-color: white;
+        border: 1px solid #000;
+        color: #000;
+        padding: 10px 25px;
+        font-weight: bold;
+        margin-top: 40px;
+        transition: background-color 0.2s;
+    }
+
+        .btn-save-back:hover {
+            background-color: #f0f0f0;
+        }
+
+    /* Responsive adjustment for mobile */
+    @@media (max-width: 768px) {
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="container-fluid">
+
+    <h1 class="account-welcome">hello, @User.Identity.Name!</h1>
+    <p class="account-sub-header">Are your details still correct?</p>
+
+    @using (Html.BeginForm("Index", "Manage", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="details-grid">
+
+            <div class="column-left">
+                <div class="form-group-custom">
+                    <label>Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-input-custom", placeholder = Model.Email })
+                </div>
+
+                <div class="form-group-custom">
+                    <label>First Name</label>
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-input-custom", placeholder = Model.FirstName })
+                </div>
+
+                <div class="form-group-custom">
+                    <label>Second Name</label>
+                    @Html.TextBoxFor(m => m.SecondName, new { @class = "form-input-custom", placeholder = Model.SecondName })
+                </div>
+                <div class="form-group-custom">
+                    <label>Phone Number</label>
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-input-custom", placeholder = Model.PhoneNumber })
+                </div>
+
+                <a href="@Url.Action("ChangePassword", "Manage")" class="password-link">
+                    Click here to change your password
+                </a>
+            </div>
+
+            <div class="column-right">
+                <div class="form-group-custom">
+                    <label>Address Lane 1</label>
+                    @Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-input-custom", placeholder = Model.AddressLine1 })
+                </div>
+
+                <div class="form-group-custom">
+                    <label>Address Lane 2</label>
+                    @Html.TextBoxFor(m => m.AddressLine2, new { @class = "form-input-custom", placeholder = Model.AddressLine2 })
+                </div>
+
+                <div class="form-group-custom">
+                    <label>City</label>
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-input-custom", placeholder = Model.City })
+                </div>
+
+                <div class="form-group-custom">
+                    <label>PostCode</label>
+                    @Html.TextBoxFor(m => m.Postcode, new { @class = "form-input-custom", placeholder = Model.Postcode })
+                </div>
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn-save-back">
+            Save new Details
+        </button>
+    }
+
+</div>

@@ -1,0 +1,178 @@
+﻿@model Initilal_YV_Assesment2.Models.BlogDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* ===== PAGE LAYOUT ===== */
+    body {
+        background-color: #dcdcdc;
+    }
+
+    .post-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding-bottom: 60px;
+    }
+
+    /* ===== HEADER SECTION ==== */
+    .post-title {
+        font-family: 'Times New Roman', serif;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #000;
+        margin-top: 30px;
+        margin-bottom: 5px;
+    }
+
+    .post-meta {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    /* ==== WHITE BOX FOR POST TEXT ==== */
+    .content-box {
+        background-color: white;
+        padding: 25px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 40px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* ==== COMMENTS SECTION ==== */
+    .comments-header {
+        font-family: 'Times New Roman', serif;
+        font-size: 1.8rem;
+        border-bottom: 1px solid #777;
+        margin-bottom: 25px;
+        padding-bottom: 5px;
+        color: #000;
+    }
+
+    .comment-item {
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+    }
+
+    .comment-row {
+        display: flex;
+        margin-bottom: 8px;
+    }
+
+    .comment-label {
+        width: 130px; /* Fixed width for labels to align perfectly */
+        font-weight: normal;
+        color: #444;
+        flex-shrink: 0; /* Prevents label from squishing */
+    }
+
+    .comment-value {
+        color: #222;
+    }
+
+    .username-color {
+        color: #8b3a3a;
+        font-weight: bold;
+    }
+
+    /* ==== LEAVE A COMMENT ==== */
+    .btn-leave-comment {
+        background-color: #bfa6a6;
+        border: 1px solid #000;
+        padding: 10px 30px;
+        font-weight: 500;
+        text-decoration: none;
+        float: right; /* Pushes button to the right */
+        display: inline-block;
+        transition: background-color 0.2s;
+    }
+
+    .btn-leave-comment:hover {
+        background-color: #a38888;
+        color: black;
+        text-decoration: none;
+    }
+
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <h1 class="post-title">@Model.Post.Title</h1>
+
+    <div class="post-meta">
+        Category: @Model.Category.Name<br />
+        Author: @Model.Post.User.UserName<br />
+        Publishing date: @Model.Post.DatePosted.ToShortDateString()
+    </div>
+
+    <div class="content-box">
+        @Model.Post.Content
+    </div>
+
+    <h2 class="comments-header">Comments:</h2>
+
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        foreach (var comment in Model.Comments.OrderByDescending(c => c.DatePosted))
+        {
+            <div class="comment-item">
+                <div class="comment-row">
+                    <span class="comment-label">Username:</span>
+                    <span class="comment-value username-color">
+                        @comment.User.UserName
+                    </span>
+                </div>
+
+                <div class="comment-row">
+                    <span class="comment-label">Comment:</span>
+                    <span class="comment-value">
+                        @comment.CommentText
+                    </span>
+                </div>
+
+                <div class="comment-row">
+                    <span class="comment-label">Date published:</span>
+                    <span class="comment-value">
+                        @comment.DatePosted.ToShortDateString()
+                    </span>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+
+<div class="clearfix">
+    @if (ViewBag.IsSuspended == true)
+    {
+        <button onclick="alert('You are currently suspended until @ViewBag.SuspendedUntil. You cannot post comments.');"
+                class="btn-leave-comment"
+                style="cursor: pointer;">
+            Leave your comment
+        </button>
+    }
+    else
+    {
+        <a href="@Url.Action("AddComment", "Blog", new { postId = Model.Post.PostId })" class="btn-leave-comment">
+            Leave your comment
+        </a>
+    }
+</div>
+
+    <p>
+        @Html.ActionLink("Back to Posts", "Index")
+    </p>
+</div>

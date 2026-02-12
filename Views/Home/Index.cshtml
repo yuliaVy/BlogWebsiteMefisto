@@ -1,0 +1,267 @@
+﻿@model Initilal_YV_Assesment2.Models.HomeViewModel
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<style>
+    /* CUSTOM STYLES FOR HOME PAGE */
+
+    body {
+        background-color: #dcdcdc;
+    }
+
+    /* 1. Header Typography */
+    .welcome-header {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+
+    .welcome-title {
+        font-family: 'Times New Roman', serif;
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+        color: #1a1a1a;
+    }
+
+    .welcome-subtitle {
+        font-style: italic;
+        color: #555;
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    /* 2. Left Column: Blog / Announcements */
+    .blog-section {
+        padding-right: 20px;
+    }
+
+    .announcement-box {
+        background-color: rgba(255, 255, 255, 0.4); /* Semi-transparent grey box */
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .announcement-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+
+    /* Blog List Items */
+    .blog-item {
+        margin-bottom: 25px;
+    }
+
+    .blog-item h4 {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+    }
+
+    .blog-item p {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0;
+    }
+
+    /* 3. Center Column: Logo Circle */
+    .center-logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .big-logo-circle {
+        background-color: white;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%; /* Makes it a perfect circle */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* 4. Right Column: Login Form */
+    .login-container {
+        padding-left: 20px;
+    }
+
+    .login-header-box {
+        background-color: #e6e6e6;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    /* Little arrow pointing down from login header */
+    .login-header-box::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 10px 10px 0;
+        border-style: solid;
+        border-color: #e6e6e6 transparent transparent transparent;
+    }
+
+    .form-control-custom {
+        border: 1px solid #999;
+        border-radius: 0;
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .btn-custom-white {
+        background-color: white;
+        border: 1px solid #333;
+        color: #333;
+        padding: 8px 20px;
+        font-weight: 500;
+        width: 100%;
+        transition: all 0.2s;
+    }
+
+    .btn-custom-white:hover {
+        background-color: #f0f0f0;
+    }
+
+    .or-divider {
+        text-align: center;
+        margin-top: 8px;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+</style>
+<div class="container-fluid">
+
+    <div class="welcome-header">
+        <h1 class="welcome-title">Welcome to Mefisto Theatre Company's Website</h1>
+        <p class="welcome-subtitle">
+            "Mefisto Theatre Company is more than just a venue; it’s a community. We bring the best of
+            the performing arts to your neighborhood, blending traditional stagecraft with a passion for
+            modern storytelling."
+        </p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 blog-section">
+            <a href="@Url.Action("Index", "Blog")" style="text-decoration:none; color:inherit;">
+                <div class="announcement-box">
+                    <div class="announcement-title">
+                        Have a look at our<br />latest<br />announcements
+                    </div>
+                </div>
+            </a>
+
+            @if (Model.LatestPosts != null && Model.LatestPosts.Any())
+            {
+                foreach (var post in Model.LatestPosts)
+                {
+                    <div class="blog-item">
+                        <h4>
+                            <a href="@Url.Action("Details", "Blog", new { id = post.PostId })">
+                                @post.Title
+                            </a>
+                        </h4>
+
+                        <p>
+                            @if (post.Content != null && post.Content.Length > 100)
+                            {
+                                @post.Content.Substring(0, 100) <text>...</text>
+                            }
+                            else
+                            {
+                                @post.Content
+                            }
+                        </p>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No announcements available at the moment.</p>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <div class="center-logo-container">
+                <div class="big-logo-circle">
+                    <img src="~/images/logo.png" alt="Company Logo" style="width: 280px; height: auto; margin-bottom: 15px; border-radius: 50%;" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 login-container">
+
+            @if (!Request.IsAuthenticated)
+            {
+                <div class="login-header-box">
+                    Login here to leave comments
+                </div>
+
+                <form action="@Url.Action("Login", "Account")" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <label>Email</label>
+                    <div style="position: relative;">
+                        <input type="email" name="Email" class="form-control-custom" placeholder="Input" />
+                    </div>
+
+                    <label>Password</label>
+                    <div style="position: relative;">
+                        <input type="password" name="Password" class="form-control-custom" placeholder="Password" />
+                    </div>
+
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-xs-5">
+                            <button type="submit" class="btn btn-custom-white">Login</button>
+                        </div>
+
+                        <div class="col-xs-2 or-divider">or</div>
+
+                        <div class="col-xs-5">
+                            <a href="@Url.Action("Register", "Account")" class="btn btn-custom-white">Register here!</a>
+                        </div>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="login-header-box" style="background-color: #dff0d8; color: #3c763d;">
+                    Welcome back!
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <p>You are logged in as <strong>@User.Identity.Name</strong></p>
+
+                    <a href="@Url.Action("Index", "Blog")" class="btn btn-custom-white" style="margin-bottom: 10px;">
+                        View Latest Posts
+                    </a>
+
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger" style="width: 100%;">Log Off</button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

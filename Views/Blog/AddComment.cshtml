@@ -1,0 +1,132 @@
+﻿@model Initilal_YV_Assesment2.Models.Comment
+
+@{
+    ViewBag.Title = "AddComment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* ===== PAGE LAYOUT ===== */
+    body {
+        background-color: #dcdcdc;
+    }
+
+    /* ==== Header Styling ===== */
+    .comment-page-header {
+        font-family: 'Times New Roman', serif;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        color: #000;
+    }
+
+    .post-title-ref {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #222;
+    }
+
+    /* ===== Box for Post Content ===== */
+    .post-ref-box {
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        color: #555;
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    /* ==== The Comment Input Area ===== */
+    .comment-label {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        display: block;
+        color: #000;
+    }
+
+    .custom-textarea {
+        width: 100%;
+        max-width: 100%; /* Ensures it doesn't break layout */
+        height: 200px;
+        padding: 15px;
+        border: 1px solid #333;
+        font-size: 1rem;
+        resize: vertical; /* Allows user to make it taller */
+        margin-bottom: 20px;
+    }
+
+    /* ==== Submit Button ==== */
+    .btn-submit-comment {
+        background-color: white;
+        color: black;
+        border: 2px solid #000; /* Bold black border */
+        padding: 8px 30px;
+        font-weight: bold;
+        font-style: italic; /* Matches the button text style in image */
+        float: right;
+        transition: all 0.2s;
+    }
+
+    .btn-submit-comment:hover {
+        background-color: #f0f0f0;
+        text-decoration: none;
+    }
+
+    /* 5. Back Link */
+    .back-link {
+        font-style: italic;
+        text-decoration: underline;
+        color: #000;
+        float: left;
+        margin-top: 10px;
+    }
+</style>
+
+
+
+<div class="container-fluid">
+
+    <h2 class="comment-page-header">Tell Us What You Think About This Post</h2>
+
+    <div class="post-title-ref">
+        @ViewBag.Post.Title
+    </div>
+
+    <div class="post-ref-box">
+        @ViewBag.Post.Content
+    </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label class="comment-label">Comment:</label>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CommentText, new { htmlAttributes = new { @class = "custom-textarea" } })
+                    @Html.ValidationMessageFor(model => model.CommentText, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="clearfix">
+                <button type="submit" class="btn btn-submit-comment">
+                    Submit Comment
+                </button>
+
+                <a href="@Url.Action("Details", "Blog", new { id = ViewBag.Post.PostId })" class="back-link">
+                    Go back to the Post..
+                </a>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>

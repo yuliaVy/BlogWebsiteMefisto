@@ -1,0 +1,52 @@
+﻿@model Initilal_YV_Assesment2.Models.Category
+
+@{
+    ViewBag.Title = "CreateCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+
+    .create-header {
+        font-family: 'Times New Roman', serif;
+        font-size: 2.5rem;
+        color: #1a1a1a;
+        border-bottom: 1px solid #666; /* The thin line under the title */
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+        margin-top: 20px;
+    }
+</style>
+<div class="container-fluid">
+    <h2 class="create-header">Create Category</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <h3>@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })</h3>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Category Name here" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-outline-dark" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to View All Categories", "ViewAllCategories")
+    </div>
+</div>
+
+
+

@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <div class="row text-center">
+
+        <!-- View Users -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                @Html.ActionLink("View All Users", "ViewAllUsers", "Admin", new { @class = "btn btn-danger mb-3" })
+
+                <p class="small">
+                    Here, you can view a list of all registered users and the comments they've left.
+                    You can also promote users to an Admin position or suspend them from commenting
+                    on posts for 30 days.
+                </p>
+            </div>
+        </div>
+
+        <!-- View Staff -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                @Html.ActionLink("View Staff", "ViewStaff", "Admin", new { @class = "btn btn-danger mb-3" })
+
+                <p class="small">
+                    This page allows you to view a complete directory of staff members and the posts
+                    they have published. As an administrator, you can promote staff members to an
+                    Admin position.
+                </p>
+            </div>
+        </div>
+
+        <!-- View Categories -->
+        <div class="col-md-4">
+            <div class="card p-3">
+                @Html.ActionLink("View All Categories", "ViewAllCategories", "Admin", new { @class = "btn btn-danger mb-3" })
+
+                <p class="small">
+                    You can view a complete list of all categories, create new ones to organize
+                    your content, and edit or delete existing categories as your needs change.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+

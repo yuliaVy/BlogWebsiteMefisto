@@ -1,0 +1,103 @@
+﻿@model Initilal_YV_Assesment2.Models.StaffDetailsViewModel
+
+@{
+    ViewBag.Title = "StaffDetails";
+}
+
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+</style>
+
+<div class="container-fluid">
+    <div>
+        <h2>Staff Details</h2>
+        <hr />
+        <!-- USER INFO TABLE -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>User name</th>
+                    <th>First Name</th>
+                    <th>Second Name</th>
+                    <th>Date Become Employee</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>@Model.User.UserName</td>
+                    <td>@Model.User.FirstName</td>
+                    <td>@Model.User.SecondName</td>
+                    <td>@Model.User.BecomeEmployee.ToString()</td>
+                    <td>@Model.User.Email</td>
+                    <td>@Model.User.PhoneNumber</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- ACTION BUTTONS -->
+    <div class="text-end mb-4">
+        @using (Html.BeginForm("PromoteToAdmin", "Admin", FormMethod.Post))
+         {
+            @Html.Hidden("userId", Model.User.Id)
+            <button ctype="submit"
+                    class="btn btn-danger mb-3"
+                    onclick="return confirm('Are you sure you want to promote Staff to Admin Role?');">
+                Promote Staff to Admin Role
+            </button>
+         }
+    </div>
+    <!--Here comments left by user displays-->
+    <hr />
+
+    <h4>Posts created by this Staff Member:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Post ID</th>
+                <th>Content</th>
+                <th>Date Posted</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var post in Model.Posts)
+            {
+                <tr>
+                    <td>@post.PostId</td>
+
+                    <td style="max-width:400px">
+                        @post.Content
+                    </td>
+
+                    <td>@post.DatePosted.ToShortDateString()</td>
+
+                    <td>@post.Category.Name</td>
+                    <td>
+                        @using (Html.BeginForm("DeletePost", "Admin", new { id = post.PostId}, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to permanently delete this post?');">
+                                Delete Post
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <p>
+        @Html.ActionLink("Back to List", "ViewAllUsers")
+    </p>
+</div>
