@@ -7,7 +7,7 @@
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 
 ## 📖 Overview
-**Mefisto Theatre Blog** is a content management system (CMS) designed to help a local theatre reconnect with its community. The platform serves as a digital hub where theatre staff can share updates, behind-the-scenes stories, and announcements, while fostering audience engagement through a moderated comment system.
+**Mefisto Theatre Blog** is a content management system designed to help a local theatre reconnect with its community. The platform serves as a digital hub where theatre staff can share updates, behind-the-scenes stories, and announcements, while fostering audience engagement through a moderated comment system.
 
 This project was developed as an advanced college assignment to demonstrate **Role-Based Access Control (RBAC)**, **Complex State Management**, and **Secure Data Administration**.
 
