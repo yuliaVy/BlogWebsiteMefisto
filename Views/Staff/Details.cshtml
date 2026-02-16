@@ -1,0 +1,135 @@
+﻿@model Initilal_YV_Assesment2.Models.BlogDetailsViewModel
+
+@{
+    ViewBag.Title = "Post Details";
+}
+
+<style>
+    body {
+        background-color: #dcdcdc;
+    }
+
+    .post-wrapper {
+        background: #f4f4f4;
+        padding: 25px;
+        border-radius: 6px;
+        margin-top: 20px;
+    }
+
+    .post-content-box {
+        background: #ffffff;
+        padding: 20px;
+        margin-top: 15px;
+        border-left: 4px solid #b89c9c;
+    }
+
+    .meta {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .action-buttons {
+        margin-top: 15px;
+        text-align: right;
+    }
+
+    .comments-section {
+        margin-top: 30px;
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+    }
+
+    .comment-box {
+        background: #ffffff;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+    }
+
+    .comment-meta {
+        font-size: 13px;
+        color: #777;
+    }
+
+    .delete-comment {
+        margin-top: 10px;
+        text-align: right;
+    }
+</style>
+
+<div class="container">
+
+    <div class="post-wrapper">
+
+        <!-- TITLE -->
+        <h2>@Model.Post.Title</h2>
+
+        <!-- META INFO -->
+        <div class="meta">
+            Category: @Model.Category.Name <br />
+            Author: @Model.Post.User.UserName <br />
+            Publishing date: @Model.Post.DatePosted.ToString("dd/MM/yyyy")
+        </div>
+
+        <!-- CONTENT -->
+        <div class="post-content-box">
+            @Model.Post.Content
+        </div>
+
+        
+
+        <div class="action-buttons">
+
+            @using (Html.BeginForm("Delete", "Staff", new { id = Model.Post.PostId }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit"
+                        class="btn btn-danger me-2"
+                        onclick="return confirm('Are you sure you want to delete this post, there is no way to undo this');">
+                    Delete Post
+                </button>
+            }
+
+            @Html.ActionLink("Edit this Post", "Edit", "Staff",
+                new { id = Model.Post.PostId },
+                new { @class = "btn btn-secondary" })
+        </div>
+
+        <!-- COMMENTS -->
+        <div class="comments-section">
+            <h4>Comments:</h4>
+
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment-box">
+
+                    <div class="comment-meta">
+                        Username: @comment.User.UserName
+                    </div>
+                    <div>
+                        @comment.CommentText
+                    </div>
+                    <div class="comment-meta">
+                        Date published: @comment.DatePosted.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+
+                    @using (Html.BeginForm("DeleteComment", "Staff", new { id = comment.CommentId, postId = Model.Post.PostId }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <button type="submit"
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Are you sure you want to delete this comment? This cannot be undone.');">
+                            Delete Comment
+                        </button>
+                    }
+
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

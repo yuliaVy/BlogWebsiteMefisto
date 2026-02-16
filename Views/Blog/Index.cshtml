@@ -8,18 +8,25 @@
         background-color: #dcdcdc;
     }
 
-    .content-area {
+    /*.content-area {
         display: flex;
-    }
+        align-items: flex-start;
+        gap: 20px;
+    }*/
+    /*
+    .sidebar-action {
+        width: 20%;
+        min-width: 200px;
+    }*/
 
     /* ===== LEFT PANEL ===== */
 
-    .left-panel {
-        float: left; 
+    /*    .left-panel {
+        float: left;
         width: 22%;
         background: #e6e6e6;
         padding: 10px;
-    }
+    }*/
 
     .toggle-btn {
         width: 100%;
@@ -31,21 +38,21 @@
         border-bottom: 1px solid #ccc;
     }
 
-    .cat-item a {
-        text-decoration: none;
-        color: black;
-    }
+        .cat-item a {
+            text-decoration: none;
+            color: black;
+        }
 
-    .cat-item.all {
-        font-weight: bold;
-    }
+        .cat-item.all {
+            font-weight: bold;
+        }
 
     /* ===== POSTS ===== */
 
-    .posts-area {
+    /*    .posts-area {
         width: 78%;
         padding: 20px;
-    }
+    }*/
 
     .title {
         font-family: serif;
@@ -70,80 +77,68 @@
     }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
+    <div class="row">
 
-    <div class="content-area">
+        <div class="col-12 col-lg-2 mb-3 mb-lg-0">
+            <br />
+            <a class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasCategories" role="button" aria-controls="offcanvasCategories">
+                Browse by Category
+            </a>
 
-        <!-- ===== LEFT CATEGORIES ===== -->
-        <div class="left-panel">
-
-            <button class="toggle-btn" onclick="toggleCategories()">
-                ☰ Categories
-            </button>
-
-            <div id="catList">
-
-                <div class="cat-item all">
-                    @Html.ActionLink("VIEW ALL POSTS", "Index", "Blog")
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCategories" aria-labelledby="offcanvasCategoriesLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">Categories</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
+                <div class="offcanvas-body">
+                    <div id="catList">
 
-                @foreach (var cat in Model.Categories)
-                {
-                    <div class="cat-item">
-                        @Html.ActionLink(cat.Name, "Index", new { categoryId = cat.CategoryId })
+                        <div class="cat-item all">
+                            @Html.ActionLink("VIEW ALL POSTS", "Index", "Blog")
+                        </div>
+
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <div class="cat-item">
+                                @Html.ActionLink(cat.Name, "Index", new { categoryId = cat.CategoryId })
+                            </div>
+                        }
                     </div>
-                }
+                </div>
             </div>
-
         </div>
 
         <!-- ===== POSTS AREA ===== -->
-        <div class="posts-area">
+        <div class="col-12 col-lg-10">
 
-            <h2 class="title">Mefisto Theatre Blog</h2>
+            <h2 class="title mb-4">Mefisto Theatre Blog</h2>
 
             @foreach (var post in Model.Posts)
             {
-                <div class="post-box">
+                <div class="post-box mb-3 p-3 bg-white rounded shadow-sm">
 
                     <h4>@post.Title</h4>
 
-                    <div class="meta">
+                    <div class="meta text-muted small mb-2">
                         Category: @post.Category.Name <br />
                         Author: @post.User.UserName
                     </div>
 
                     <p>
-                        @if (post.Content != null && post.Content.Length > 220)
-                        {
-                            @post.Content.Substring(0, 220) <text>...</text>
-                        }
-                        else
-                        {
-                            @post.Content
-                        }
+                        @(post.Content?.Length > 220
+                            ? post.Content.Substring(0, 220) + "..."
+                            : post.Content)
                     </p>
 
-                    <div class="read-more">
-                        @Html.ActionLink( "READ MORE NOW ➜", "Details", new { id = post.PostId })
+                    <div class="text-end fw-bold">
+                        @Html.ActionLink("READ MORE NOW ➜", "Details", new { id = post.PostId })
                     </div>
 
                 </div>
             }
+
         </div>
+
     </div>
 </div>
-
-<script>
-    function toggleCategories() {
-        var list = document.getElementById("catList");
-
-        if (list.style.display === "none")
-        {
-            list.style.display = "block";
-        } else
-        {
-            list.style.display = "none";
-        }
-    }
-</script>

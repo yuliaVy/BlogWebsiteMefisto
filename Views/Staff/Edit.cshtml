@@ -1,0 +1,128 @@
+﻿@model Initilal_YV_Assesment2.Models.Post
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* 1. Header Typography */
+    .create-post-header {
+        font-family: 'Times New Roman', serif;
+        font-size: 3rem;
+        margin-top: 30px;
+        margin-bottom: 5px;
+        color: #1a1a1a;
+    }
+
+    .create-post-subheader {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #999;
+        padding-bottom: 15px;
+        display: block;
+    }
+
+    /* 2. Form Styling */
+    .form-label-custom {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        display: block;
+        color: #000;
+    }
+
+    .input-custom {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #666;
+        background-color: white;
+        margin-bottom: 20px;
+        max-width: 600px; /* Prevents title from getting too wide */
+    }
+
+    .textarea-custom {
+        width: 100%;
+        height: 250px; /* Tall box for content */
+        padding: 10px;
+        border: 1px solid #666;
+        border-radius: 0;
+        background-color: white;
+        resize: vertical;
+        margin-bottom: 20px;
+        font-family: sans-serif;
+    }
+
+    /* 3. The Dropdown */
+    .dropdown-custom {
+        width: 100%;
+        max-width: 300px;
+        padding: 8px;
+        border: 1px solid #666;
+        background-color: white;
+        margin-bottom: 30px;
+    }
+
+    /* 4. Buttons and Links */
+    .btn-post-now {
+        background-color: white;
+        border: 2px solid #000;
+        color: #000;
+        padding: 10px 40px;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+        .btn-post-now:hover {
+            background-color: #333;
+            color: white;
+        }
+</style>
+
+<div class="container">
+
+    <h1 class="create-post-header">Edit your Post</h1>
+    <span class="create-post-subheader">Forgot something?</span>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.PostId)
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "form-label-custom" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "input-custom" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "form-label-custom" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "textarea-custom" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category, "Category", htmlAttributes: new { @class = "form-label-custom" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoryId", null, "Choose a category", new { @class = "dropdown-custom" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Changes!" class="btn btn-post-now" />
+            </div>
+        </div>
+    }
+    <br />
+    <div>
+        @Html.ActionLink("Back to Post Details", "Details")
+    </div>
+</div>

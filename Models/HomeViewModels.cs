@@ -20,7 +20,7 @@ namespace Initilal_YV_Assesment2.Models
         public List<Post> Posts { get; set; }
     }
 
-    //view model which can display staff with list of the Posts they have created
+    //view model which can display details of current post
     public class BlogDetailsViewModel
     {
         public Post Post { get; set; }

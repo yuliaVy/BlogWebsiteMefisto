@@ -23,7 +23,7 @@
                     {
                         if (User.IsInRole("Staff") || User.IsInRole("Admin"))
                         {
-                            <li>@Html.ActionLink("Staff Dashboard", "Index", "Staff", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Staff Dashboard", "Dashboard", "Staff", new { area = "" }, new { @class = "nav-link" })</li>
                         }
                         if (User.IsInRole("Admin"))
                         {

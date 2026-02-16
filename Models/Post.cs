@@ -15,6 +15,7 @@ namespace Initilal_YV_Assesment2.Models
         [Required]
         public string Title { get; set; }
 
+        [Required]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
