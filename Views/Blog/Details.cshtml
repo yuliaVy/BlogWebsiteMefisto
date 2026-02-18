@@ -6,8 +6,11 @@
 
 <style>
     /* ===== PAGE LAYOUT ===== */
-    body {
-        background-color: #dcdcdc;
+    .post-wrapper {
+        background: #f4f4f4;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 20px;
     }
 
     .post-container {
@@ -22,7 +25,7 @@
         font-size: 2.2rem;
         font-weight: bold;
         color: #000;
-        margin-top: 30px;
+        margin-top: 10px;
         margin-bottom: 5px;
     }
 
@@ -35,29 +38,19 @@
 
     /* ==== WHITE BOX FOR POST TEXT ==== */
     .content-box {
-        background-color: white;
-        padding: 25px;
-        border: 1px solid #ccc;
-        font-size: 1rem;
-        line-height: 1.6;
-        color: #333;
-        margin-bottom: 40px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        background: #ffffff;
+        padding: 20px;
+        margin-top: 15px;
+        border-left: 4px solid #b89c9c;
     }
 
     /* ==== COMMENTS SECTION ==== */
-    .comments-header {
-        font-family: 'Times New Roman', serif;
-        font-size: 1.8rem;
-        border-bottom: 1px solid #777;
-        margin-bottom: 25px;
-        padding-bottom: 5px;
-        color: #000;
-    }
 
     .comment-item {
-        margin-bottom: 30px;
-        padding-bottom: 10px;
+        background: #ffffff;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
     }
 
     .comment-row {
@@ -106,73 +99,75 @@
     }
 </style>
 
-<div class="container-fluid">
+<div class="container">
+    <div class="post-wrapper">
 
-    <h1 class="post-title">@Model.Post.Title</h1>
+        <h class="post-title">@Model.Post.Title</h>
 
-    <div class="post-meta">
-        Category: @Model.Category.Name<br />
-        Author: @Model.Post.User.UserName<br />
-        Publishing date: @Model.Post.DatePosted.ToShortDateString()
-    </div>
+        <div class="post-meta">
+            Category: @Model.Category.Name<br />
+            Author: @Model.Post.User.UserName<br />
+            Publishing date: @Model.Post.DatePosted.ToShortDateString()
+        </div>
 
-    <div class="content-box">
-        @Model.Post.Content
-    </div>
+        <div class="content-box">
+            @Model.Post.Content
+        </div>
+        <hr>
+        <h4>Comments:</h4>
 
-    <h2 class="comments-header">Comments:</h2>
-
-    @if (Model.Comments != null && Model.Comments.Any())
-    {
-        foreach (var comment in Model.Comments.OrderByDescending(c => c.DatePosted))
+        @if (Model.Comments != null && Model.Comments.Any())
         {
-            <div class="comment-item">
-                <div class="comment-row">
-                    <span class="comment-label">Username:</span>
-                    <span class="comment-value username-color">
-                        @comment.User.UserName
-                    </span>
-                </div>
+            foreach (var comment in Model.Comments.OrderByDescending(c => c.DatePosted))
+            {
+                <div class="comment-item">
+                    <div class="comment-row">
+                        <span class="comment-label">Username:</span>
+                        <span class="comment-value username-color">
+                            @comment.User.UserName
+                        </span>
+                    </div>
 
-                <div class="comment-row">
-                    <span class="comment-label">Comment:</span>
-                    <span class="comment-value">
-                        @comment.CommentText
-                    </span>
-                </div>
+                    <div class="comment-row">
+                        <span class="comment-label">Comment:</span>
+                        <span class="comment-value">
+                            @comment.CommentText
+                        </span>
+                    </div>
 
-                <div class="comment-row">
-                    <span class="comment-label">Date published:</span>
-                    <span class="comment-value">
-                        @comment.DatePosted.ToShortDateString()
-                    </span>
+                    <div class="comment-row">
+                        <span class="comment-label">Date published:</span>
+                        <span class="comment-value">
+                            @comment.DatePosted.ToShortDateString()
+                        </span>
+                    </div>
                 </div>
-            </div>
+            }
         }
-    }
-    else
-    {
-        <p>No comments yet.</p>
-    }
+        else
+        {
+            <p>No comments yet.</p>
+        }
 
-<div class="clearfix">
-    @if (ViewBag.IsSuspended == true)
-    {
-        <button onclick="alert('You are currently suspended until @ViewBag.SuspendedUntil. You cannot post comments.');"
-                class="btn-leave-comment"
-                style="cursor: pointer;">
-            Leave your comment
-        </button>
-    }
-    else
-    {
-        <a href="@Url.Action("AddComment", "Blog", new { postId = Model.Post.PostId })" class="btn-leave-comment">
-            Leave your comment
-        </a>
-    }
-</div>
+        <div class="clearfix">
+            @if (ViewBag.IsSuspended == true)
+            {
+                <button onclick="alert('You are currently suspended until @ViewBag.SuspendedUntil. You cannot post comments.');"
+                        class="btn-leave-comment"
+                        style="cursor: pointer;">
+                    Leave your comment
+                </button>
+            }
+            else
+            {
+                <a href="@Url.Action("AddComment", "Blog", new { postId = Model.Post.PostId })" class="btn-leave-comment">
+                    Leave your comment
+                </a>
+            }
+        </div>
 
-    <p>
-        @Html.ActionLink("Back to Posts", "Index")
-    </p>
+        <p>
+            @Html.ActionLink("Back to Posts", "Index")
+        </p>
+    </div>
 </div>

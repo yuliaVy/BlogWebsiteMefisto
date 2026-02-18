@@ -4,12 +4,6 @@
     ViewBag.Title = "MemberDetails";
 }
 
-<style>
-    body {
-        background-color: #dcdcdc;
-    }
-</style>
-
 <div class="container-fluid">
     <div>
         <h2>Member's Details</h2>
@@ -53,7 +47,7 @@
         </table>
     </div>
     <!-- ACTION BUTTONS -->
-    <div class="text-end mb-4">
+    <div class="d-flex gap-3 justify-content-end mt-3">
 
         @if (Model.User.IsSuspended)
         {
@@ -79,7 +73,9 @@
             {
                 @Html.Hidden("userId", Model.User.Id)
 
-                <button class="btn btn-danger">
+                <button type="submit"
+                        class="btn btn-info mb-3"
+                        onclick="return confirm('Are you sure you want to promote user to the staff role?');">
                     Promote User to Staff
                 </button>
             }

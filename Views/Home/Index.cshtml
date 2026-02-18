@@ -1,14 +1,15 @@
 ﻿@model Initilal_YV_Assesment2.Models.HomeViewModel
 @{
     ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
     /* CUSTOM STYLES FOR HOME PAGE */
-
+/*
     body {
         background-color: #dcdcdc;
-    }
+    }*/
 
     /* 1. Header Typography */
     .welcome-header {
@@ -148,7 +149,8 @@
         font-size: 1.1rem;
     }
 </style>
-<div class="container-fluid">
+@*<div class="container-fluid">*@
+<div>
 
     <div class="welcome-header">
         <h1 class="welcome-title">Welcome to Mefisto Theatre Company's Website</h1>

@@ -67,32 +67,42 @@
         </thead>
 
         <tbody>
-            @foreach (var post in Model.Posts)
+            @if (Model.Posts != null && Model.Posts.Any())
             {
-                <tr>
-                    <td>@post.PostId</td>
+                foreach (var post in Model.Posts)
+                {
+                    <tr>
+                        <td>@post.PostId</td>
 
-                    <td style="max-width:400px">
-                        @post.Content
-                    </td>
+                        <td style="max-width:400px">
+                            @post.Content
+                        </td>
 
-                    <td>@post.DatePosted.ToShortDateString()</td>
+                        <td>@post.DatePosted.ToShortDateString()</td>
 
-                    <td>@post.Category.Name</td>
-                    <td>
-                        @using (Html.BeginForm("DeletePost", "Admin", new { id = post.PostId}, FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
+                        <td>@post.Category.Name</td>
+                        <td>
+                            @using (Html.BeginForm("DeletePost", "Admin", new { id = post.PostId }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
 
-                            <button type="submit"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure you want to permanently delete this post?');">
-                                Delete Post
-                            </button>
-                        }
-                    </td>
-                </tr>
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to permanently delete this post?');">
+                                    Delete Post
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
             }
+            else
+            {
+                <div class="alert alert-warning">
+                    Staff member haven't created any posts yet.
+                </div>
+            }
+
         </tbody>
     </table>
 

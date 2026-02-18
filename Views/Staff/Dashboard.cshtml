@@ -4,26 +4,25 @@
 }
 
 <style>
-    /* Reusing your Blog Page Styles */
     body {
         background-color: #dcdcdc;
     }
 
     /* LAYOUT CONTAINERS */
-    .dashboard-container {
+    /*.dashboard-container {
         display: flex;
         align-items: flex-start;
         gap: 20px;
         padding-top: 20px;
-    }
+    }*/
 
     /* SIDEBAR */
-    .sidebar-panel {
+/*    .sidebar-panel {
         width: 20%;
         min-width: 200px;
         padding: 15px;
         border-radius: 5px;
-    }
+    }*/
     .cat-item {
         padding: 8px;
         border-bottom: 1px solid #ccc;
@@ -79,7 +78,7 @@
         margin-bottom: 20px;
         border-radius: 4px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        border-left: 5px solid #666; /* Different accent color for Staff */
+        border-left: 5px solid #666;
     }
 
     .btn-details {
@@ -100,77 +99,80 @@
     }
 </style>
 
-<div class="container-fluid dashboard-container">
-
-    <div class="sidebar-panel">
-        <br />
-        <a class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasCategories" role="button" aria-controls="offcanvasCategories">
-            Browse by Category
-        </a>
-
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCategories" aria-labelledby="offcanvasCategoriesLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">Categories</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div id="catList">
-
-                    <div class="cat-item all">
-                        @Html.ActionLink("VIEW ALL MY POSTS", "Dashboard", "Staff")
-                    </div>
-
-                    @foreach (var cat in Model.Categories)
-                    {
-                        <div class="cat-item">
-                            @Html.ActionLink(cat.Name, "Dashboard", new { categoryId = cat.CategoryId })
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-content">
-
-        <div class="dashboard-header">
-            <h1 class="header-title">Staff Dashboard</h1>
-
-            <a href="@Url.Action("Create", "Staff")" class="btn-create-new">
-                Create a new Post
+<div class="container-fluid mt-4">
+    <div class="row">
+        @*<div class="sidebar-panel">*@
+        <div class="col-12 col-lg-2 mb-3 mb-lg-0">
+            <br />
+            <a class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasCategories" role="button" aria-controls="offcanvasCategories">
+                Browse by Category
             </a>
+
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCategories" aria-labelledby="offcanvasCategoriesLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">Categories</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div id="catList">
+
+                        <div class="cat-item all">
+                            @Html.ActionLink("VIEW ALL MY POSTS", "Dashboard", "Staff")
+                        </div>
+
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <div class="cat-item">
+                                @Html.ActionLink(cat.Name, "Dashboard", new { categoryId = cat.CategoryId })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
 
-        @if (!Model.Posts.Any())
-        {
-            <div class="alert alert-warning">
-                You haven't created any posts in this category yet.
-            </div>
-        }
+        <div class="col-12 col-lg-10">
+            <div class="dashboard-header">
+                <h1 class="header-title">Staff Dashboard</h1>
 
-        @foreach (var post in Model.Posts)
-        {
-            <div class="staff-post-card clearfix">
-                <h3 style="margin-top:0;">@post.Title</h3>
-
-                <div style="color:#777; font-style:italic; margin-bottom:10px;">
-                    Category: @post.Category.Name | Author: @post.User.UserName
-                </div>
-
-                <p>
-                    @if (post.Content != null && post.Content.Length > 200)
-                    {
-                        @post.Content.Substring(0, 200)<text>...</text>
-                    }
-                    else
-                    {
-                        @post.Content
-                    }
-                </p>
-
-                <a href="@Url.Action("Details", "Staff", new { id = post.PostId })" class="btn-details">
-                    Details
+                <a href="@Url.Action("Create", "Staff")" class="btn-create-new">
+                    Create a new Post
                 </a>
             </div>
-        }
+
+            @if (!Model.Posts.Any())
+            {
+                <div class="alert alert-warning">
+                    You haven't created any posts in this category yet.
+                </div>
+            }
+
+            @foreach (var post in Model.Posts)
+            {
+                <div class="staff-post-card clearfix">
+                    <h3 style="margin-top:0;">@post.Title</h3>
+
+                    <div style="color:grey; font-size:13px ;font-style:italic; margin-bottom:8px;">
+                        Category: @post.Category.Name <br/>
+                        Author: @post.User.UserName
+                    </div>
+
+                    <p>
+                        @if (post.Content != null && post.Content.Length > 200)
+                        {
+                            @post.Content.Substring(0, 200)<text>...</text>
+                        }
+                        else
+                        {
+                            @post.Content
+                        }
+                    </p>
+
+                    <a href="@Url.Action("Details", "Staff", new { id = post.PostId })" class="btn-details">
+                        Details
+                    </a>
+                </div>
+            }
+        </div>
     </div>
 </div>
