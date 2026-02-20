@@ -9,15 +9,31 @@ namespace Initilal_YV_Assesment2.Models
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
+
+        [Required(ErrorMessage = "Please enter your phone number")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid mobile number")]
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
 
 
-        // ADD NEW PROPERTIES 
+        // ADDED NEW PROPERTIES 
+        [Required]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Please enter your First Name.")]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Use valid symbols in your First Name")]
+        [MaxLength(30, ErrorMessage = "First name can't be more than 30 characters"), MinLength(2, ErrorMessage = "First name can't be less than 2 characters")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your Second Name.")]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Use valid symbols in your Second Name")]
+        [MaxLength(40, ErrorMessage = "Second name can't be more than 40 characters"), MinLength(2, ErrorMessage = "Second name can't be less than 2 characters")]
+        [Display(Name = "Second Name")]
         public string SecondName { get; set; }
+
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string City { get; set; }

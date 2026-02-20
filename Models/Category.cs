@@ -11,6 +11,7 @@ namespace Initilal_YV_Assesment2.Models
         [Key]
         public int CategoryId { get; set; }
 
+        [Required(ErrorMessage = "Category Name field can't be blank!")]
         [Display(Name = "Category")]
         public string Name { get; set; }
 

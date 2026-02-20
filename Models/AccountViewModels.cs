@@ -67,15 +67,16 @@ namespace Initilal_YV_Assesment2.Models
     public class RegisterViewModel
     {
         [Required]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Use valid symbols in your First Name")]
+        [MaxLength(30, ErrorMessage = "First name can't be more than 30 characters"), MinLength(2, ErrorMessage = "First name can't be less than 2 characters")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Use valid symbols in your Second Name")]
+        [MaxLength(40, ErrorMessage = "Second name can't be more than 40 characters"), MinLength(2, ErrorMessage = "Second name can't be less than 2 characters")]
         [Display(Name = "Second Name")]
         public string SecondName { get; set; }
-
-        [NotMapped]
-        public IdentityUserRole CurrentRole { get; set; }
 
         [Required(ErrorMessage = "You must provide a mobile phone number")]
         [Display(Name = "Mobile Number")]
@@ -89,7 +90,6 @@ namespace Initilal_YV_Assesment2.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

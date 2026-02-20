@@ -15,15 +15,19 @@ namespace Initilal_YV_Assesment2.Models
     public class User : IdentityUser
     {
         [Required]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Use valid symbols in your First Name")]
+        [MaxLength(30, ErrorMessage = "Second name can't be less then 2 and more then 30 characters"), MinLength(2)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Use valid symbols in your Second Name")]
+        [MaxLength(40, ErrorMessage = "Second name can't be less then 2 and more then 40 characters"), MinLength(2)]
         [Display(Name = "Second Name")]
         public string SecondName { get; set; }
 
-
         [Display (Name = "Address Lane 1")]
+        
         public string AddressLine1 { get; set; }
 
         [Display(Name = "Address Lane 2")]

@@ -61,6 +61,7 @@ namespace Initilal_YV_Assesment2.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.UpdateProfileSuccess ? "Your profile has been updated successfully."
                 : "";
 
             // fetch the full User object from the database
@@ -94,12 +95,19 @@ namespace Initilal_YV_Assesment2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Index(IndexViewModel model)
         {
+            var userId = User.Identity.GetUserId();
+
             if (!ModelState.IsValid)
             {
+                model.HasPassword = HasPassword();
+                model.TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId);
+                model.Logins = await UserManager.GetLoginsAsync(userId);
+                model.BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId);
+
+                // Return the view so the user can see the validation errors
                 return View(model);
             }
 
-            var userId = User.Identity.GetUserId();
             var user = await UserManager.FindByIdAsync(userId);
 
             if (user != null)
@@ -117,7 +125,7 @@ namespace Initilal_YV_Assesment2.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess }); // Reuse success message or create new one
+                    return RedirectToAction("Index", new { Message = ManageMessageId.UpdateProfileSuccess });
                 }
 
                 // If save failed, show errors
@@ -126,6 +134,16 @@ namespace Initilal_YV_Assesment2.Controllers
                     ModelState.AddModelError("", error);
                 }
             }
+            else
+            {
+                ModelState.AddModelError("", "We could not find your user account.");
+            }
+
+            // Repopulate form data again just in case the UserManager.UpdateAsync failed
+            model.HasPassword = HasPassword();
+            model.TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId);
+            model.Logins = await UserManager.GetLoginsAsync(userId);
+            model.BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId);
 
             return View(model);
         }
@@ -439,7 +457,8 @@ namespace Initilal_YV_Assesment2.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            UpdateProfileSuccess
         }
 
 #endregion

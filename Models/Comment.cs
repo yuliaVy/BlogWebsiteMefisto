@@ -12,7 +12,7 @@ namespace Initilal_YV_Assesment2.Models
         [Key]
         public int CommentId { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "Comment field can't be blank!")]
         [DataType(DataType.MultilineText)]
         public string CommentText { get; set; }
 

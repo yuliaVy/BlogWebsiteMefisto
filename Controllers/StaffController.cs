@@ -32,7 +32,7 @@ namespace Initilal_YV_Assesment2.Controllers
             var vm = new BlogViewModel
             {
                 Categories = categories,
-                Posts = posts.OrderByDescending(p => p.DatePosted).ToList()
+                Posts = posts.OrderByDescending(p => p.DateEdited).ToList()
             };
             //return the view
             return View(vm);
@@ -58,6 +58,7 @@ namespace Initilal_YV_Assesment2.Controllers
                 // fill the system fields
                 post.UserId = User.Identity.GetUserId(); // The logged-in Staff/Admin
                 post.DatePosted = DateTime.Now;
+                post.DateEdited = DateTime.Now;
 
                 // Save to DB
                 context.Posts.Add(post);

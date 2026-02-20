@@ -270,6 +270,7 @@ namespace Initilal_YV_Assesment2.Models
                     "discount nights are clearly working! Join the Discussion: What is your favorite silent-era film?" +
                     " Leave a comment below and let us know what we should screen next month!",
                     DatePosted = new DateTime(2019, 1, 19),
+                    DateEdited = new DateTime(2019, 1, 19),
                     User = admin,
                     Category = cat2
                 };
@@ -283,6 +284,7 @@ namespace Initilal_YV_Assesment2.Models
                     "easy to move!) allowed the acting to take center stage. Moderation Reminder: We welcome all opinions, " +
                     "but please keep reviews constructive. Inappropriate language will be removed by the Mefisto moderation team.",
                     DatePosted = new DateTime(2020, 12, 7), 
+                    DateEdited = new DateTime(2020, 12, 7),
                     User = admin,
                     Category = cat3
                 };
@@ -297,6 +299,7 @@ namespace Initilal_YV_Assesment2.Models
                     "This approach keeps our production costs low while delivering big budget " +
                     "visuals that look amazing from every angle in the house.",
                     DatePosted = new DateTime(2021, 1, 25),
+                    DateEdited = new DateTime(2021, 1, 25),
                     User = staff,
                     Category = cat4
                 };

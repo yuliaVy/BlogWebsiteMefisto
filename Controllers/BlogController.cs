@@ -140,7 +140,7 @@ namespace Initilal_YV_Assesment2.Controllers
             
             // If there was an error (like empty content), show the form again
             // We need to keep the PostId so the form knows where to submit next time
-            ViewBag.PostId = postId;
+            ViewBag.Post = context.Posts.Find(postId);
             return View(comment);
         }
     }

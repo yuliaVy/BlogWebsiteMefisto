@@ -32,6 +32,7 @@ namespace Initilal_YV_Assesment2.Models
 
         //Navigational property
         [ForeignKey("Category")]
+        [Required(ErrorMessage = "Category is required!")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
